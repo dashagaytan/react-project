@@ -8,31 +8,49 @@ function Form(){
         joinNewsLetter: true //checkbox
     })
     
-     function handleSubmit(event){
-    
+     function handleChange(event){
+        const {name, value, type, checked} = event.target
+            setFormData(prevFormData => {
+                return{
+                    ...prevFormData,
+                    [name]: type === "checkbox" ? checked : value
+                }
+            })
+      }
+
+      function handleSubmit(event){
+        event.preventDefault()
+        console.log(formData)
       }
 
       return(
         <div className="form-container">
-            <from className="form" onSubmit={handleSubmit}>
+            <form className="form" onSubmit={handleSubmit}>
                 <input 
-                    value={formData.email}
                     type="email"
                     name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="Email address"
                 />
                 <br>
                 </br>
 
                 <input 
-                    type={formData.password}
+                    placeholder="Password"
+                    type="password"
                     name="password"
+                    onChange={handleChange}
                 />
                 <br>
                 </br>
 
                 <input 
-                    value={formData.confirmPassword}
+                    type="password"
                     name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    placeholder="Confirm password"
                 />
                 <br>
                 </br>
@@ -40,14 +58,17 @@ function Form(){
                 <div>
                     <input 
                         type="checkbox"
-                        id="okayToEmail"
+                        id="joinNewsLetter"
                         name="joinNewsLetter"
+                        checked={formData.joinNewsLetter}
+                        onChange={handleChange}
+
                     />
-                    <label htmlFor="okayToEmail">Do you want to join the news letter?</label>
+                    <label htmlFor="joinNewsLetter">I want to join the newsletter?</label>
                 </div>
                     <button className="form--submit">Sign Up</button>
 
-            </from>
+            </form>
         </div>
       )
 }
